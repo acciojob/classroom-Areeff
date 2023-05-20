@@ -1,8 +1,8 @@
 package com.driver;
 
+import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,29 +18,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("students")
 public class StudentController {
+    HashMap<String,Student>Studentdata=new HashMap<>();
+    HashMap<String,Teacher>Teacherdata=new HashMap<>();
+    HashMap<String, String> StudentTeacher=new HashMap<String, String>();
 
     @PostMapping("/add-student")
     public ResponseEntity<String> addStudent(@RequestBody Student student){
-
+        Studentdata.put(student.getName(),student);
         return new ResponseEntity<>("New student added successfully", HttpStatus.CREATED);
     }
 
     @PostMapping("/add-teacher")
     public ResponseEntity<String> addTeacher(@RequestBody Teacher teacher){
-
+        Teacherdata.put(teacher.getName(),teacher);
         return new ResponseEntity<>("New teacher added successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("/add-student-teacher-pair")
     public ResponseEntity<String> addStudentTeacherPair(@RequestParam String student, @RequestParam String teacher){
-
+        StudentTeacher.put(student,teacher);
         return new ResponseEntity<>("New student-teacher pair added successfully", HttpStatus.CREATED);
     }
 
     @GetMapping("/get-student-by-name/{name}")
     public ResponseEntity<Student> getStudentByName(@PathVariable String name){
         Student student = null; // Assign student by calling service layer method
-
+       // for(<String,Student> child:Studentdata.entrySet());
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
